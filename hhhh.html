@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RehaSoft - Настройка сеансов реабилитации</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --secondary-dark: #059669;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border-radius: 16px;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            --shadow-hover: 0 15px 50px rgba(99, 102, 241, 0.4);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.6s ease-out;
+
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header p {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Tagline */
+        .tagline {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .tagline::before {
+            content: '';
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        }
+
+        .tagline span {
+            background: var(--darker);
+            padding: 0 20px;
+            position: relative;
+            font-size: 18px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .btn {            padding: 20px 40px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, 
+
+var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.4);        }
+
+
+        .btn-contact {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        .btn-contact:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border-radius: var(--border-radius);
+            width: 95%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            position: relative;
+
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .modal-header {
+            padding: 30px;
+            background: rgba(99, 102, 241, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        .close-modal {
+
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+
+        .finger-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .finger-section:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .finger-title {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+            margin-bottom: 20px;            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .finger-title i {
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--gray);
+
+            font-weight: 500;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-dark);
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: center;
+            font-size: 18px;
+
+            font-weight: 600;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+
+            margin: 0;
+            font-size: 15px;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .mode-select {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mode-select:focus {            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .program-name {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .program-name:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .modal-footer {
+            padding: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(16, 185, 129, 0.5);
+        }
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+            }
+        }
+
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 40px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .modal-content {
+                width: 95%;
+
+                margin: 20px;
+            }
+            
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-hand-holding-medical"></i>
+                <span class="logo-text">RehaSoft</span>
+            </div>
+
+            <h1>Доступная реабилитация!</h1>
+            <p>Интеллектуальная платформа для персонализированной реабилитации кисти в домашних условиях</p>
+        </div>
+
+        <!-- Tagline -->
+        <div class="tagline">
+            <span><i class="fas fa-bolt"></i> Безопасно | Персонализировано | Автономно</span>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="btn btn-primary" id="openModal">
+                <i class="fas fa-cog"></i>
+                Выбрать параметры для сеанса
+            </button>
+
+            <a href="https://t.me/Kotik_v_Kostume" class="btn btn-contact" target="_blank">
+                <i class="fas fa-paper-plane"></i>
+                Связаться с нами
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>RehaSoft Core © 2026 | Программное обеспечение для реабилитации межфаланговых суставов</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="configModal">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-sliders-h"></i> Настройка сеанса реабилитации</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="program-name" id="programName" placeholder="Название программы (например: Утро, Вечер, Интенсивный)" value="Базовый режим">
+
+                <div class="finger-section">
+                    <div class="finger-title">
+                        <i class="fas fa-hand-point-up"></i>
+                        <span>Указательный палец</span>
+                    </div>
+
+                    <div class="form-group">                        <label><i class="fas fa-ruler-combined"></i> Амплитуда движения (20-100°)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="amp1" min="20" max="100" value="70">
+                            <span class="slider-value" id="amp1val">70°</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tachometer-alt"></i> Скорость (5-60 град/с)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="speed1" min="5" max="60" value="25">
+                            <span class="slider-value" 
+
+id="speed1val">25 град/с</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-redo"></i> Повторения</label>
+                        <input type="number" class="program-name" id="rep1" min="1" max="50" value="10">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enabled1" checked>
+                        <label for="enabled1">Включить этот палец в программу</label>
+                    </div>
+                </div>
+
+                <div class="finger-section">
+                    <div class="finger-title">
+
+                        <i class="fas fa-hand-pointer"></i>
+                        <span>Средний палец</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-ruler-combined"></i> Амплитуда движения (20-100°)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="amp2" min="20" max="100" value="70">
+                            <span class="slider-value" id="amp2val">70°</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tachometer-alt"></i> Скорость (5-60 град/с)</label>
+
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="speed2" min="5" max="60" value="25">
+                            <span class="slider-value" id="speed2val">25 град/с</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-redo"></i> Повторения</label>
+                        <input type="number" class="program-name" id="rep2" min="1" max="50" value="10">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enabled2" checked>
+                        <label for="enabled2">Включить этот палец в программу</label>
+
+                    </div>                </div>
+
+                <div class="finger-section">
+                    <div class="finger-title">
+                        <i class="fas fa-hand-middle-finger"></i>
+                        <span>Безымянный палец</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-ruler-combined"></i> Амплитуда движения (20-100°)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="amp3" min="20" max="100" value="60">
+                            <span class="slider-value" id="amp3val">60°</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tachometer-alt"></i> Скорость (5-60 град/с)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="speed3" min="5" max="60" value="20">
+                            <span class="slider-value" id="speed3val">20 град/с</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-redo"></i> Повторения</label>
+                        <input type="number" class="program-name" id="rep3" min="1" max="50" value="10">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" 
+
+id="enabled3" checked>
+                        <label for="enabled3">Включить этот палец в программу</label>
+                    </div>
+                </div>
+
+                <div class="finger-section">
+                    <div class="finger-title">
+                        <i class="fas fa-hand-sparkles"></i>
+                        <span>Мизинец</span>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-ruler-combined"></i> Амплитуда движения (20-100°)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="amp4" min="20" max="100" value="50">
+
+                            <span class="slider-value" id="amp4val">50°</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tachometer-alt"></i> Скорость (5-60 град/с)</label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="speed4" min="5" max="60" value="15">
+                            <span class="slider-value" id="speed4val">15 град/с</span>
+                        </div>
+                    </div>                    <div class="form-group">
+                        <label><i class="fas fa-redo"></i> Повторения</label>
+                        <input type="number" class="program-name" id="rep4" min="1" 
+
+max="50" value="10">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enabled4" checked>
+                        <label for="enabled4">Включить этот палец в программу</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-cogs"></i> Режим работы</label>
+                    <select class="mode-select" id="mode">
+                        <option value="0">Пассивный режим (устройство двигает пальцем)</option>
+                        <option value="1">Активный режим (пациент преодолевает 
+
+сопротивление)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="save-btn" id="saveBtn">
+                    <i class="fas fa-download"></i>
+                    ?? Сохранить программу на флешку
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('configModal');
+        const openModalBtn = document.getElementById('openModal');
+
+        const closeModalBtn = document.getElementById('closeModal');
+        const saveBtn = document.getElementById('saveBtn');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+
+            }
+        });
+
+        // Update slider values        const sliders = document.querySelectorAll('.slider');
+        sliders.forEach(slider => {
+            const valueDisplay = document.getElementById(`${slider.id}val`);
+            slider.addEventListener('input', () => {
+                if (slider.id.includes('amp')) {
+                    valueDisplay.textContent = `${slider.value}°`;
+                } else if (slider.id.includes('speed')) {
+                    valueDisplay.textContent = `${slider.value} град/с`;
+                }
+            });
+        });
+
+        // Save functionality
+        saveBtn.addEventListener('click', () => {
+            const name = document.getElementById('programName').value;
+            const mode = document.getElementById('mode').value;
+            
+            const data = 
+                `name:${name}\n` +
+                `mode:${mode}\n` +
+                `finger1:amp=${document.getElementById('amp1').value},speed=${document.getElementById('speed1').value},rep=${document.getElementById('rep1').value},enabled=${document.getElementById('enabled1').checked ? 1 : 0}\n` +
+                `finger2:amp=$
+
+{document.getElementById('amp2').value},speed=${document.getElementById('speed2').value},rep=${document.getElementById('rep2').value},enabled=${document.getElementById('enabled2').checked ? 1 : 0}\n` +
+                `finger3:amp=${document.getElementById('amp3').value},speed=${document.getElementById('speed3').value},rep=${document.getElementById('rep3').value},enabled=${document.getElementById('enabled3').checked ? 1 : 0}\n` +
+                `finger4:amp=${document.getElementById('amp4').value},speed=${document.getElementById('speed4').value}
+
+,rep=${document.getElementById('rep4').value},enabled=${document.getElementById('enabled4').checked ? 1 : 0}`;
+            
+            const blob = new Blob([data], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'program1.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            URL.revokeObjectURL(url);
+            
+
+            // Show success message
+            alert('? Файл program1.txt успешно сохранён!\nСкопируйте его на флешку и вставьте в тренажёр.');
+            
+            // Close modal after save
+            modal.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
